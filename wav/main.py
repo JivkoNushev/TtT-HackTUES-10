@@ -14,8 +14,8 @@ NUM_SAMPLES_TO_WRITE = SAMPLE_RATE * 12
 
 
 for i in range(NUM_SAMPLES_TO_WRITE):
-    # value = int.from_bytes(rand_file.read(4), "little") % SAMPLE_WIDTH
-    value = (SAMPLE_WIDTH // 2) + i % SAMPLE_WIDTH
+    value = int.from_bytes(rand_file.read(4), "little") % SAMPLE_WIDTH
+    # value = (SAMPLE_WIDTH // 2) + i % SAMPLE_WIDTH
     if value != 0:
         original_value = value
 
