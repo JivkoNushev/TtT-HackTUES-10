@@ -6,7 +6,7 @@ analog_values = []
 analog_values_inverted = []
 
 
-SAMPLE_RATE = 44100
+# SAMPLE_RATE = 44100
 SAMPLE_RATE = 1
 SAMPLE_WIDTH = 1 << 16 - 1
 SAMPLE_WIDTH_BYTES = 2
@@ -33,14 +33,17 @@ for i in range(NUM_SAMPLES_TO_WRITE):
 print(analog_values)
 print(analog_values_inverted)
 
-wav_file = wave.open("sample_audio/output.wav", "w")
+# file:
+wav_file = wave.open("sample_audio/2.wav", "w")
 wav_file.setnchannels(1)
 wav_file.setsampwidth(SAMPLE_WIDTH_BYTES)
 wav_file.setframerate(SAMPLE_RATE)
 wav_file.writeframes(b"".join(analog_values))
 
-wav_file = wave.open("sample_audio/output_inverted.wav", "w")
-wav_file.setnchannels(1)
-wav_file.setsampwidth(SAMPLE_WIDTH_BYTES)
-wav_file.setframerate(SAMPLE_RATE)
-wav_file.writeframes(b"".join(analog_values_inverted))
+
+# inverted file:
+# wav_file = wave.open("sample_audio/output_inverted.wav", "w")
+# wav_file.setnchannels(1)
+# wav_file.setsampwidth(SAMPLE_WIDTH_BYTES)
+# wav_file.setframerate(SAMPLE_RATE)
+# wav_file.writeframes(b"".join(analog_values_inverted))

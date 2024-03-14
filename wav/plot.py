@@ -8,7 +8,7 @@ def plot_single_file(audioFilename):
     duration = len(audioBuffer) / sampleRate
     time = np.arange(0, duration, 1/sampleRate)
 
-    # plt.figure()  # Create a new figure for each plot
+    plt.figure()  # Create a new figure for each plot
     plt.plot(time, audioBuffer)
     plt.axhline(0, color='red', linestyle='--')  # Add a line at y=0
     plt.xlabel('Time [s]')

@@ -1,17 +1,32 @@
 import scipy.io.wavfile
 import numpy as np
 
-# Load the two audio files
-sample_rate_output, output = scipy.io.wavfile.read('sample_audio/output.wav')
-sample_rate_inverted, inverted = scipy.io.wavfile.read('sample_audio/output_inverted.wav')
+def combine_audio_files(files):
+    combined_signal = None
+    sample_rate = None
 
-# Make sure both audio signals have the same length
-min_length = min(len(output), len(inverted))
-output = output[:min_length]
-inverted = inverted[:min_length]
+    # Iterate over each file
+    for file in files:
+        # Read the audio file
+        sample_rate, audio_data = scipy.io.wavfile.read(file)
 
-# Combine the two audio signals
-combined = output + inverted
+        # Initialize combined signal if not yet initialized
+        if combined_signal is None:
+            combined_signal = audio_data
+        else:
+            # Make sure all signals have the same length
+            min_length = min(len(combined_signal), len(audio_data))
+            combined_signal = combined_signal[:min_length]
+            audio_data = audio_data[:min_length]
 
-# Save the combined audio to a new file
-scipy.io.wavfile.write('sample_audio/combined.wav', sample_rate_output, combined)
+            # Combine the signals
+            combined_signal += audio_data
+
+    # Save the combined audio to a new file
+    if combined_signal is not None and sample_rate is not None:
+        scipy.io.wavfile.write('sample_audio/combined.wav', sample_rate, combined_signal)
+    else:
+        print("error")
+# Example usage:
+files_to_combine = ['sample_audio/1.wav', 'sample_audio/2.wav', 'sample_audio/main.wav']
+combine_audio_files(files_to_combine)

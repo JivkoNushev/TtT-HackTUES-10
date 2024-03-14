@@ -1,8 +1,16 @@
 from plot import *
 
-plot_single_file('sample_audio/output.wav')
-plot_single_file('sample_audio/output_inverted.wav')
 
-plot_multiple_files(['sample_audio/output.wav', 'sample_audio/output_inverted.wav'])
+files = [
+        'sample_audio/1.wav',
+        'sample_audio/2.wav',
+        'sample_audio/main.wav',
+        'sample_audio/combined.wav'
+    ]
+
+for file in files:
+    plot_single_file(file)
+
+plot_multiple_files(files)
 
 plt.show()
