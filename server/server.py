@@ -3,6 +3,8 @@ import wave
 import scipy.io.wavfile
 import paho.mqtt.client as paho
 
+# install mosquitto first!
+
 NUM_SAMPLE_BYTES_TO_WRITE = 10
 SAMPLE_RATE = 44100
 SAMPLE_RATE = 1
@@ -13,9 +15,10 @@ SAMPLE_WIDTH_BYTES = 2
 def dysect(fileName):
     output = []
 
-    wavfile = scipy.io.wavfile.read(fileName)
+    sample_rate, audio_data = scipy.io.wavfile.read(fileName)
+    tuple = (sample_rate, audio_data)
+    output.append(tuple)
 
-    output.append(wavfile)
     return output # returns opened scipy wav files (not wave)
 
     # print(wavfile)
@@ -28,16 +31,27 @@ def dysect(fileName):
     # plt.show()
 
 def choose_from_dysected(dystected_files):
-    return dystected_files[0]
+    output = []
+    output.append(dystected_files[0])
+    # output.append(dystected_files[0])
+    return output
 
 def combine(files):
+    if len(files) == 0:
+        print("No files to combine")
+        return
+    if len(files) == 1:
+        print("Only one file to combine")
+        sample_rate, audio_data = files[0]
+        return audio_data
+
     combined_signal = None
     sample_rate = None
 
     # Iterate over each file
     for file in files:
         # Read the audio file
-        sample_rate, audio_data = scipy.io.wavfile.read(file)
+        sample_rate, audio_data = file
 
         # Initialize combined signal if not yet initialized
         if combined_signal is None:
@@ -53,7 +67,8 @@ def combine(files):
 
     # Save the combined audio to a new file
     if combined_signal is not None and sample_rate is not None:
-        scipy.io.wavfile.write('sample_audio/combined.wav', sample_rate, combined_signal)
+        print('returned combined signal')
+        return combined_signal
     else:
         print("error")
 
@@ -68,27 +83,32 @@ def message_handling(client, userdata, msg):
     print(li_bytes)
     client.publish("silence", msg.payload.decode(), 0)
 
+
+    # create new file
     file_name = "sample_audio/output.wav"
 
     wav_file = wave.open(file_name, "w")
     wav_file.setnchannels(1)
     wav_file.setsampwidth(SAMPLE_WIDTH_BYTES)
     wav_file.setframerate(SAMPLE_RATE)
-
     wav_file.writeframes(b"".join(li_bytes))
-
-    sample_rate_output1 = wav_file.getframerate()
-
+    sample_rate_output = wav_file.getframerate()
     wav_file.close()
 
+    # dysect the wav file into multiple waves
     dysected_files = dysect(file_name)
+
+    # choose which waves to keep
     chosen_files = choose_from_dysected(dysected_files)
+
+    # combine the chosen waves
     combined = combine(chosen_files)
 
-    # combine chosen_files
-    sample_rate_output2, bulshit = scipy.io.wavfile.read(file_name)
-    print(sample_rate_output1, sample_rate_output2)
-    scipy.io.wavfile.write('sample_audio/combined.wav', sample_rate_output2, -combined)
+    # save the combined wave
+    scipy.io.wavfile.write('sample_audio/combined.wav', sample_rate_output, -combined)
+
+    # TODO: start tracking time
+    # if it is the right moment send combined.wav
 
 
 client = paho.Client()
