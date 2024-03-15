@@ -1,38 +1,4 @@
-<script src="https://unpkg.com/wavesurfer.js">
-  // importing directly. Not working when there is no WIFI
-</script>
-
-<script>
-  // var wavesurfer = Object.create(WaveSurfer);
-
-  // wavesurfer.init({
-  //     // container: document.querySelector('#wave'),
-  //     container: '#waveform',
-  //     waveColor: 'rgb(200, 0, 200)',
-  //     progressColor: 'rgb(100, 0, 100)',
-  //     height: 400,
-  // });
-
-  // wavesurfer.on('ready', function () {
-  //     wavesurfer.play();
-  // });
-
-
-  var wavesurfer = WaveSurfer.create({
-    container: '#waveform',
-    waveColor: 'rgb(200, 0, 200)',
-    progressColor: 'rgb(100, 0, 100)',
-    height: 400,
-  });
-</script>
-
-<script>
-  wavesurfer.load('<%= rails_blob_url(@audio.audio_file) %>');
-</script>
-
 <main class="m-5">
-
-
   <h1 class="text-4xl mb-4"><%= @audio.audio_file.filename %></h1>
 
   <%= link_to sanitize("&larr; Back to all audio files"), audios_path, class: "text-blue-500 hover:underline mb-4 inline-block" %>
@@ -53,5 +19,16 @@
         Forward <i class="fa fa-step-forward"></i> >
     </button>
   </div>
-
 </main>
+
+<script src="https://unpkg.com/wavesurfer.js"></script>
+<script>
+  var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'rgb(200, 0, 200)',
+    progressColor: 'rgb(100, 0, 100)',
+    height: 400,
+  });
+
+  wavesurfer.load('<%= rails_blob_url(@audio.audio_file) %>');
+</script>
