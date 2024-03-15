@@ -35,7 +35,7 @@ def combine_audio_files(files, output_file):
 def combine(files, output_file):
     combined = []
 
-    sample_rate = 10000
+    sample_rate = 44000
     for file in files:
         sample_rate, data = scipy.io.wavfile.read(file)
         data = data.astype(np.float32) / 32767.0
@@ -47,11 +47,11 @@ def combine(files, output_file):
 
     scipy.io.wavfile.write(output_file, sample_rate, combined)
 
-def create_propeller_noise(filename, sample_rate=44100, max_frequencies=10):
+def create_propeller_noise(filename, sample_rate=44000, max_frequencies=10):
     if path.isfile(filename):
         return
 
-    frequencies = [random.randint(20, 250) for _ in range(random.randint(1, max_frequencies))]
+    frequencies = [random.randint(20, 40) for _ in range(random.randint(1, max_frequencies))]
     print(f"Propeller frequenices: {frequencies}")
 
     x = np.linspace(0, 1, sample_rate)  # the points on the x axis for plotting
@@ -72,9 +72,9 @@ def create_propeller_noise(filename, sample_rate=44100, max_frequencies=10):
         wf.setframerate(sample_rate)
         wf.writeframes(scaled_wave.tobytes())
 
-def create_random_noise(filename, sample_rate=44100, max_frequesncies=100):
+def create_random_noise(filename, sample_rate=44000, max_frequesncies=100):
 
-    frequencies = [random.randint(20, 2000) for _ in range(random.randint(1, max_frequesncies))]
+    frequencies = [random.randint(20, 30) for _ in range(random.randint(1, max_frequesncies))]
     print(f"Random frequencies: {frequencies}")
     x = np.linspace(0, 1, sample_rate)  # the points on the x axis for plotting
 
@@ -102,7 +102,7 @@ def create_noise(output_file, sample_rate):
     
     combine(["sample_audio/random_noise.wav", "sample_audio/propeller_noise.wav"], output_file)
 
-def simulate_noise(noise_samples=5, sample_rate=44100):
+def simulate_noise(noise_samples=5, sample_rate=44000):
     for i in range(noise_samples):
         file_name = "sample_audio/sample_" + str(i)  + ".wav"
         create_noise(file_name, sample_rate)
@@ -111,7 +111,7 @@ import matplotlib.pyplot as plt
 
 from wav.plot import plot_single_file
 
-simulate_noise(noise_samples=1, sample_rate=44100)
+simulate_noise(noise_samples=1, sample_rate=1000)
 
 plot_single_file("sample_audio/sample_0.wav")
 plt.show()
