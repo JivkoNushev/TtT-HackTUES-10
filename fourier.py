@@ -30,7 +30,7 @@ def get_fourier_frequencies(wav_file):
 
     # Get the corresponding frequencies for the FFT
     # frequencies = np.fft.rfftfreq(len(data), d=1/sample_rate)
-    peaks, _ = signal.find_peaks(fourier, height=1)
+    peaks, dict_ = signal.find_peaks(fourier, height=1)
 
     # # Plot the frequency spectrum
     # _, c1 = plt.subplots()
@@ -41,7 +41,7 @@ def get_fourier_frequencies(wav_file):
     # plt.title('Frequency Spectrum')
     # plt.grid()
 
-    return peaks, fourier
+    return peaks, dict_, fourier
 
 # peaks = get_fourier_frequencies("sample_audio/sample_0.wav")
 # print(peaks)

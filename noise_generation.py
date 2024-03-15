@@ -51,7 +51,7 @@ def create_propeller_noise(filename, sample_rate=44000, max_frequencies=10):
     if path.isfile(filename):
         return
 
-    frequencies = [random.randint(20, 40) for _ in range(random.randint(1, max_frequencies))]
+    frequencies = [random.randint(20, 30) for _ in range(random.randint(1, max_frequencies))]
     print(f"Propeller frequenices: {frequencies}")
 
     x = np.linspace(0, 1, sample_rate)  # the points on the x axis for plotting
@@ -74,7 +74,7 @@ def create_propeller_noise(filename, sample_rate=44000, max_frequencies=10):
 
 def create_random_noise(filename, sample_rate=44000, max_frequesncies=100):
 
-    frequencies = [random.randint(20, 30) for _ in range(random.randint(1, max_frequesncies))]
+    frequencies = [random.randint(31, 40) for _ in range(random.randint(1, max_frequesncies))]
     print(f"Random frequencies: {frequencies}")
     x = np.linspace(0, 1, sample_rate)  # the points on the x axis for plotting
 
