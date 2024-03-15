@@ -72,3 +72,5 @@ end
 gem "foreman", github: "ddollar/foreman"
 gem 'filewatcher'
 gem 'wavesurfer-rails'
+gem "tailwindcss-rails", "~> 2.3"
+gem 'pagy'

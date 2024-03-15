@@ -1,0 +1,13 @@
+<section>
+  <% audios.each do |audio| %>
+    <%= link_to audio, class: "text-blue-500 block p-4 bg-gray-100 rounded-md shadow-md my-4 transition hover:delay-100 hover:bg-gray-300", data: { turbo: false } do %>
+      <div class="font-medium transition delay-100">
+        <%= audio.audio_file.filename %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <section class="mt-4">
+    <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+  </section>
+</section>

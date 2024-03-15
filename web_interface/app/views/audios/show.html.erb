@@ -1,7 +1,7 @@
-<main class="m-5">
+<main class="m-16">
   <h1 class="text-4xl mb-4"><%= @audio.audio_file.filename %></h1>
 
-  <%= link_to sanitize("&larr; Back to all audio files"), audios_path, class: "text-blue-500 hover:underline mb-4 inline-block" %>
+  <%= link_to sanitize("&larr; Back to home page"), root_path, class: "text-blue-500 hover:underline mb-4 inline-block" %>
 
   <div id="waveform" class="mb-8"></div>
 

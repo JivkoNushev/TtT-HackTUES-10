@@ -1,13 +1,17 @@
 #!/usr/bin/env sh
 
-# Check if Foreman is installed, if not install it
-if gem list --no-installed --exact --silent foreman; then
+if ! gem list foreman -i --silent; then
   echo "Installing foreman..."
   gem install foreman
 fi
 
 # Default to port 3000 if not specified
 export PORT="${PORT:-3000}"
+
+# Let the debug gem allow remote connections,
+# but avoid loading until `debugger` is called
+export RUBY_DEBUG_OPEN="true"
+export RUBY_DEBUG_LAZY="true"
 
 # Load all wav files from the audio folder
 echo "Loading audio records..."
@@ -19,5 +23,4 @@ echo "Starting file monitoring..."
 bundle exec ruby listen_for_files.rb &
 echo "Started file monitoring"
 
-# Start the Rails server using Foreman
 exec foreman start -f Procfile.dev "$@"
