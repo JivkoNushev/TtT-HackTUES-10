@@ -9,3 +9,6 @@ fi
 export PORT="${PORT:-3000}"
 
 exec foreman start -f Procfile.dev "$@"
+
+# Load all wav files from the audio folder:
+system('bundle exec rake read_audio_records')
