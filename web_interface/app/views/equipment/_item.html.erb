@@ -1,0 +1,14 @@
+<h3 class="font-medium"><%= item.name %>:</h3>
+
+<span class="ml-2 rounded-full h-4 w-4
+  <% case item.status %>
+    <% when 'in_operation', 'ready' %>
+      bg-green-500
+    <% when 'initializing' %>
+      bg-orange-500
+    <% else %>
+      bg-red-500
+  <% end %>"
+></span>
+
+<p class="ml-2 font-medium text-orange-600"><%= item.status.humanize %></p>

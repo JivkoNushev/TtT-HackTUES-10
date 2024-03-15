@@ -5,24 +5,7 @@
   </section>
 
   <section class="flex flex-col items-start ml-28">
-    <h2 class="text-2xl font-bold mb-4">Status</h2>
-
-    <div class="flex items-center mb-2 text-lg">
-      <h3 class="font-medium">System:</h3>
-      <span class="ml-2 rounded-full h-4 w-4 bg-orange-500"></span>
-      <p class="ml-2 font-medium text-orange-600">Rebooting...</p>
-    </div>
-
-    <div class="flex items-center mb-2 text-lg">
-      <h3 class="font-medium">Speaker:</h3>
-      <span class="ml-2 rounded-full h-4 w-4 bg-red-500"></span>
-      <p class="ml-2 font-medium text-red-600">Not working...</p>
-    </div>
-
-    <div class="flex items-center mb-2 text-lg">
-      <h3 class="font-medium">Microphone:</h3>
-      <span class="ml-2 rounded-full h-4 w-4 bg-green-500"></span>
-      <p class="ml-2 font-medium text-green-600">OK</p>
-    </div>
+    <h2 class="text-2xl font-bold mb-4">Equipment</h2>
+    <%= render partial: 'equipment/equipment', locals: { equipment: @equipment } %>
   </section>
 </main>
