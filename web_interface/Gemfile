@@ -70,5 +70,5 @@ group :test do
 end
 
 gem "foreman", github: "ddollar/foreman"
-
 gem 'filewatcher'
+gem 'wavesurfer-rails'

@@ -1,0 +1,57 @@
+<script src="https://unpkg.com/wavesurfer.js">
+  // importing directly. Not working when there is no WIFI
+</script>
+
+<script>
+  // var wavesurfer = Object.create(WaveSurfer);
+
+  // wavesurfer.init({
+  //     // container: document.querySelector('#wave'),
+  //     container: '#waveform',
+  //     waveColor: 'rgb(200, 0, 200)',
+  //     progressColor: 'rgb(100, 0, 100)',
+  //     height: 400,
+  // });
+
+  // wavesurfer.on('ready', function () {
+  //     wavesurfer.play();
+  // });
+
+
+  var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'rgb(200, 0, 200)',
+    progressColor: 'rgb(100, 0, 100)',
+    height: 400,
+  });
+</script>
+
+<script>
+  wavesurfer.load('<%= rails_blob_url(@audio.audio_file) %>');
+</script>
+
+<main class="m-5">
+
+
+  <h1 class="text-4xl mb-4"><%= @audio.audio_file.filename %></h1>
+
+  <%= link_to sanitize("&larr; Back to all audio files"), audios_path, class: "text-blue-500 hover:underline mb-4 inline-block" %>
+
+  <div id="waveform" class="mb-8"></div>
+
+
+  <div class="flex justify-center space-x-4">
+    <button class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" onclick="wavesurfer.skip(-1)">
+        <i class="fa fa-step-backward"></i> < Backward
+    </button>
+
+    <button class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" onclick="wavesurfer.playPause()">
+        <i class="fa fa-play"></i> Play/<i class="fa fa-pause"></i> Pause
+    </button>
+
+    <button class="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" onclick="wavesurfer.skip(1)">
+        Forward <i class="fa fa-step-forward"></i> >
+    </button>
+  </div>
+
+</main>
