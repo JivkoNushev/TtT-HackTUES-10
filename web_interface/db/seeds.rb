@@ -7,3 +7,11 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# seed for equipment:
+Equipment.destroy_all
+Audio.destroy_all
+Equipment.create(name: "System", status: 5)
+Equipment.create(name: "Microphone", status: 3)
+Equipment.create(name: "Speaker", status: 1)
+
