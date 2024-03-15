@@ -1,4 +1,4 @@
-![image](https://github.com/JivkoNushev/TtT-HackTUES-10/assets/50800277/807bdbd3-f48a-438e-a42d-62074e66da4e)# TtTranquil
+# TtTranquil
 <div align="center">
   <img src="https://github.com/JivkoNushev/TtT-HackTUES-10/assets/54147006/bfe486a6-8504-4b99-9776-bdf6c2c95fa3" alt="drawing" style="width:500px;"/>
 </div>
@@ -38,10 +38,21 @@
 </div>
 
 ## Бъдещо развитие
-
+<div>
+  <p> Бъдещото развитие на проекта включва покупката на нужния хардуер, поради липсата на финансиране. Също така за разпознаването на шума на мотора може да се използва изкуствен интелект.</p>
+</div>
 
 ## Технологии
+<div>
+  <li>esp32</li>
+  <li>raspberry-pi</li>
+  <li>Python</li>
+  <li>Embedded</li>
+</div>
 #### Протоколи
+<div>
+  <li>MQTT</li>
+</div>
 #### 
 
 ## Инсталация
