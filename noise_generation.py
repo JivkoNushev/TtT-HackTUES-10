@@ -32,26 +32,38 @@ def combine_audio_files(files, output_file):
     else:
         print("error")
 
-def create_propeller_noise(filename, duration=1.0, sample_rate=44100, max_frequencies=10):
+def combine(files, output_file):
+    combined = []
+
+    sample_rate = 10000
+    for file in files:
+        sample_rate, data = scipy.io.wavfile.read(file)
+        data = data.astype(np.float32) / 32767.0
+        combined.append(data)
+
+    combined = np.sum(combined, axis=0)
+
+    combined = np.int16(combined / np.max(np.abs(combined)) * 32767)
+
+    scipy.io.wavfile.write(output_file, sample_rate, combined)
+
+def create_propeller_noise(filename, sample_rate=44100, max_frequencies=10):
     if path.isfile(filename):
         return
 
-    num_samples = int(duration * sample_rate)
+    frequencies = [random.randint(20, 250) for _ in range(random.randint(1, max_frequencies))]
+    print(f"Propeller frequenices: {frequencies}")
 
-    frequencies = [random.randint(0, 1000) for _ in range(random.randint(0, max_frequencies))]
-
-    x = np.arange(num_samples)  # the points on the x axis for plotting
+    x = np.linspace(0, 1, sample_rate)  # the points on the x axis for plotting
 
     # compute the value (amplitude) of the sin wave for each sample
     random_waves = []
     for f in frequencies:
-        random_waves.append(np.sin(2 * np.pi * f * (x / sample_rate)))
+        random_waves.append(np.sin(2 * np.pi * f * x))
 
     # Adds the sine waves together into a single complex wave
     combined_wave = np.sum(random_waves, axis=0)
-
-    # Scale the waveform to fit in the range [-32768, 32767] (16-bit PCM)
-    scaled_wave = np.int16(combined_wave * 32767)
+    scaled_wave = np.int16(combined_wave / np.max(np.abs(combined_wave)) * 32767)
 
     # Open a new WAV file
     with wave.open(filename, 'wb') as wf:
@@ -60,23 +72,20 @@ def create_propeller_noise(filename, duration=1.0, sample_rate=44100, max_freque
         wf.setframerate(sample_rate)
         wf.writeframes(scaled_wave.tobytes())
 
-def create_random_noise(filename, duration=1.0, sample_rate=44100, max_frequesncies=100):
-    num_samples = int(duration * sample_rate)
+def create_random_noise(filename, sample_rate=44100, max_frequesncies=100):
 
-    frequencies = [random.randint(20, 20000) for _ in range(random.randint(0, max_frequesncies))]
-
-    x = np.arange(num_samples)  # the points on the x axis for plotting
+    frequencies = [random.randint(20, 2000) for _ in range(random.randint(1, max_frequesncies))]
+    print(f"Random frequencies: {frequencies}")
+    x = np.linspace(0, 1, sample_rate)  # the points on the x axis for plotting
 
     # compute the value (amplitude) of the sin wave for each sample
     random_waves = []
     for f in frequencies:
-        random_waves.append(np.sin(2 * np.pi * f * (x / sample_rate)))
+        random_waves.append(np.sin(2 * np.pi * f * x))
 
     # Adds the sine waves together into a single complex wave
     combined_wave = np.sum(random_waves, axis=0)
-
-    # Scale the waveform to fit in the range [-32768, 32767] (16-bit PCM)
-    scaled_wave = np.int16(combined_wave * 32767)
+    scaled_wave = np.int16(combined_wave / np.max(np.abs(combined_wave)) * 32767)
 
     # Open a new WAV file
     with wave.open(filename, 'wb') as wf:
@@ -86,23 +95,23 @@ def create_random_noise(filename, duration=1.0, sample_rate=44100, max_frequesnc
         wf.writeframes(scaled_wave.tobytes())
     
 
-def create_noise(output_file, sample_rate=44100):
-    create_propeller_noise("sample_audio/propeller_noise.wav", sample_rate)
-    create_random_noise("sample_audio/random_noise.wav", sample_rate)
+def create_noise(output_file, sample_rate):
+    create_propeller_noise("sample_audio/propeller_noise.wav", sample_rate, max_frequencies=1)
+    
+    create_random_noise("sample_audio/random_noise.wav", sample_rate, max_frequesncies=1)
+    
+    combine(["sample_audio/random_noise.wav", "sample_audio/propeller_noise.wav"], output_file)
 
-    combine_audio_files(["sample_audio/random_noise.wav", "sample_audio/propeller_noise.wav"], output_file)
-
-def simulate_noise_capture(noise_samples=5, sample_rate=44100):
+def simulate_noise(noise_samples=5, sample_rate=44100):
     for i in range(noise_samples):
         file_name = "sample_audio/sample_" + str(i)  + ".wav"
         create_noise(file_name, sample_rate)
 
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
-# from wav.plot import plot_single_file
+from wav.plot import plot_single_file
 
-simulate_noise_capture(sample_rate=1/1000)
+simulate_noise(noise_samples=1, sample_rate=44100)
 
-# plot_single_file("sample_audio/sample1.wav")
-# # plot_single_file("sample_audio/sample2.wav")
-# plt.show()
+plot_single_file("sample_audio/sample_0.wav")
+plt.show()
