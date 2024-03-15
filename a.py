@@ -40,8 +40,8 @@ fft = np.abs(fft)
 waveV2 = np.fft.irfft(fft)
 
 #Plot the complex waves, should be the same
-c1.plot(wave4, color="orange")
+# c1.plot(wave4, color="orange")
 # c1.plot(waveV2)
 
-# c1.plot(fft, color="green")
+c1.plot(fft, color="green")
 plt.show()
