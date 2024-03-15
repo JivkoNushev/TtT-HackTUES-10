@@ -8,7 +8,13 @@ fi
 # Default to port 3000 if not specified
 export PORT="${PORT:-3000}"
 
-exec foreman start -f Procfile.dev "$@"
+# Load all wav files from the audio folder
+echo "Loading audio records..."
+bundle exec rake read_audio_records
+echo "Loaded audio records."
 
-# Load all wav files from the audio folder:
-system('bundle exec rake read_audio_records')
+# Start monitoring for new files
+# echo "Starting file monitoring..."
+# bundle exec guard &
+
+exec foreman start -f Procfile.dev "$@"
