@@ -9,7 +9,7 @@ c2 = c1.twinx()
 fig, c2 = plt.subplots()
 
 fs = 10000  # sample rate 
-f_list = [23, 1454]  # the frequency of the signal
+f_list = [23, 60]  # the frequency of the signal
 
 x = np.linspace(0, 1, fs)  # the points on the x axis for plotting
 
