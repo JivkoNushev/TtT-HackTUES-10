@@ -1,8 +1,4 @@
-<%= turbo_stream_from "audios" %>
-
 <main class="max-w-lg mx-auto m-5">
   <h1 class="text-3xl font-bold mb-4">Audios</h1>
-  <div id="audios">
-    <%= render partial: 'audios/audios', locals: { audios: @audios } %>
-  </div>
+  <%= render partial: 'audios/audios', locals: { audios: @audios } %>
 </main>

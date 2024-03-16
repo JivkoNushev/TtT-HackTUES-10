@@ -4,6 +4,12 @@ GIT
   specs:
     foreman (0.87.2)
 
+GIT
+  remote: https://github.com/njh/ruby-mqtt.git
+  revision: 271ee631f128e66732ece935e752f13970d4267b
+  specs:
+    mqtt (0.6.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -199,6 +205,10 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
+    redis (5.1.0)
+      redis-client (>= 0.17.0)
+    redis-client (0.21.0)
+      connection_pool
     regexp_parser (2.9.0)
     reline (0.4.3)
       io-console (~> 0.5)
@@ -256,10 +266,12 @@ DEPENDENCIES
   foreman!
   jbuilder
   jsbundling-rails
+  mqtt!
   pagy
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.2)
+  redis (>= 4.0.1)
   selenium-webdriver
   sprockets-rails
   stimulus-rails
