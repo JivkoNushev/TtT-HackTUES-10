@@ -4,6 +4,7 @@
 </div>
 <p>
     Нашият проект цели да намали шумът, генериран от товарните кораби в океана, с цел подобряване на хабитата на морските обитатели.
+  Презентация: https://docs.google.com/presentation/d/1d2f0oHlDBZD9BUe0prROIdK4We9mLg90cDdkX2PxlHM/edit?usp=sharing
 </p>
   
 ## Тема: 
@@ -49,13 +50,11 @@
   <li>Python</li>
   <li>Embedded</li>
 </div>
+
 #### Протоколи
 <div>
   <li>MQTT</li>
 </div>
-#### 
-
-## Инсталация
 
 
 ## Отбор
