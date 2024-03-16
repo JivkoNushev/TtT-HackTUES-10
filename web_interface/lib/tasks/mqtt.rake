@@ -19,4 +19,14 @@ namespace :mqtt do
       puts "Equipment created"
     end
   end
+
+  task :collapse, [:name] => :environment do |t, args|
+    name = args[:name].split("/").last.capitalize
+    equipment = Equipment.find_by(name: name)
+    if equipment
+      equipment.update(status: 2) # set error status
+    else
+      puts "Equipment not found"
+    end
+  end
 end
