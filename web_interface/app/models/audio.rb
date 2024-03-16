@@ -8,6 +8,6 @@ class Audio < ApplicationRecord
 
   def self.audio_folder_path
     # TODO: change when adding to the raspberry pi
-    Rails.root.join('..', 'wav', 'sample_audio')
+    Rails.root.join('..', 'sample_audio')
   end
 end

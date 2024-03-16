@@ -1,7 +1,7 @@
 require 'filewatcher'
 
 # TODO: define the directory to watch
-directory_to_watch = File.expand_path('../wav/sample_audio', __dir__)
+directory_to_watch = File.expand_path('../sample_audio', __dir__)
 
 Filewatcher.new([directory_to_watch], wait_for_delay: 1).watch do |changes|
   changes.each do |filename, event|
