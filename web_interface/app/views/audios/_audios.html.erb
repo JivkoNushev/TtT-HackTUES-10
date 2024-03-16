@@ -1,0 +1,13 @@
+<%= turbo_stream_from "audios" %>
+
+<section>
+  <div id="audios">
+    <% audios&.each do |audio| %>
+      <%= render partial:"audios/audio", locals: { audio: audio } %>
+    <% end %>
+  </div>
+
+  <section class="mt-4">
+    <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+  </section>
+</section>

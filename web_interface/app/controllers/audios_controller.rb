@@ -1,6 +1,6 @@
 class AudiosController < ApplicationController
   def index
-    @audios = Audio.all
+    @pagy, @audios = pagy(Audio.all.order(created_at: :desc), items: 20)
   end
 
   def show

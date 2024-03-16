@@ -1,0 +1,7 @@
+<%= turbo_stream_from "equipments" %>
+
+<section id="equipments">
+  <% equipment&.each do |item| %>
+    <%= render partial: 'equipment/item', locals: { item: item } %>
+  <% end %>
+</section>

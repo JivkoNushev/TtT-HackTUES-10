@@ -1,0 +1,22 @@
+<%= turbo_frame_tag item do %>
+
+  <%= link_to item, class: "mb-2 text-black-500 block px-5 p-2 bg-gray-100 rounded-md transition hover:delay-100 hover:bg-gray-300" do %>
+    <div class="flex items-center text-lg">
+      <h3 class="font-medium"><%= item.name %>:</h3>
+
+      <span class="ml-2 rounded-full h-4 w-4
+        <% case item.status %>
+          <% when 'in_operation', 'ready' %>
+            bg-green-500
+          <% when 'initializing' %>
+            bg-orange-500
+          <% else %>
+            bg-red-500
+        <% end %>"
+      ></span>
+
+      <p class="ml-2 font-medium text-orange-600"><%= item.status.humanize %></p>
+    </div>
+  <% end %>
+
+<% end %>
