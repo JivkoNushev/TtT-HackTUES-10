@@ -11,7 +11,3 @@
 # seed for equipment:
 Equipment.destroy_all
 Audio.destroy_all
-Equipment.create(name: "System", status: 5)
-Equipment.create(name: "Microphone", status: 3)
-Equipment.create(name: "Speaker", status: 1)
-
