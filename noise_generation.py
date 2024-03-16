@@ -107,11 +107,11 @@ def simulate_noise(noise_samples=5, sample_rate=44000):
         file_name = "sample_audio/sample_" + str(i)  + ".wav"
         create_noise(file_name, sample_rate)
 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
-from wav.plot import plot_single_file
+# from wav.plot import plot_single_file
 
-simulate_noise(noise_samples=1, sample_rate=1000)
+simulate_noise(noise_samples=5, sample_rate=1000)
 
-plot_single_file("sample_audio/sample_0.wav")
-plt.show()
+# plot_single_file("sample_audio/sample_0.wav")
+# plt.show()

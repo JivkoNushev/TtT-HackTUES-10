@@ -1,63 +1,70 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.io.wavfile as wav
-from fourier import get_fourier_frequencies
-from wav.plot import plot_single_file
 
-def get_propeller_noise():
+# generate noise
+# from noise_generation import simulate_noise
+# simulate_noise(noise_samples=5, sample_rate=1000)
+
+from fourier import plot_file_fourier, get_fourier_frequencies
+
+common_freqs = {}
+
+def add_sample(filename):
+    freqs, dict_, fourier = get_fourier_frequencies(filename)
+
+    for i in range(len(freqs)):
+        if (freqs[i], dict_["peak_heights"][i]) in common_freqs:
+            common_freqs[(freqs[i], dict_["peak_heights"][i])] += 1
+        else:
+            common_freqs[(freqs[i], dict_["peak_heights"][i])] = 1
+
+def get_common_freqs(files):
+    for file in files:
+        add_sample(file)
+
+    max_count = max(common_freqs.values())
+    return [key for key, value in common_freqs.items() if value == max_count]
+
+def get_propeller_noise(files):
+    most_common_freqs = get_common_freqs(files)
     fs = 1000  # sample rate 
 
-    # plot_single_file("sample_audio/sample_0.wav")
+    x = np.linspace(0, 1, fs)  # the points on the x axis for plotting
+    propeller_noise = 0
+    # print(most_common_freqs)
+    for (frequency, amplitude) in most_common_freqs:
+        propeller_noise = amplitude * np.sin(2*np.pi*frequency*x)
 
-    # read the audio data
-    
+    # fr36 = 250 * np.sin(2*np.pi*40*x)
 
+    propeller_noise = -propeller_noise
 
-    freqs, dict_, fourier = get_fourier_frequencies("sample_audio/sample_0.wav")
+    return propeller_noise
 
-    for i in range(len(fourier)):
-        if i not in freqs:
-            fourier[i] = 0
+def demo():
 
-    rev_f = np.fft.irfft(fourier)
-
-    frequencies = np.fft.rfftfreq(len(fourier), d=1/fs)
-    print(dict_)
-
-    _, original = wav.read("sample_audio/sample_0.wav")
-    original = original.astype(np.float32) / 32767.0
-
+    # get random noise from first file
+    _, sample_0_noise = wav.read("sample_audio/sample_0.wav")
+    sample_0_noise = sample_0_noise.astype(np.float32) / 32767.0
     _, c1 = plt.subplots()
-    c1.plot(fourier, color="green")
+    c1.plot(sample_0_noise, color="blue")
 
+    # fourier on file
+    plot_file_fourier("sample_audio/sample_0.wav")
+
+    # get reverse propeller noise from fourier 
+    reversed_propeller_noise = get_propeller_noise(["sample_audio/sample_0.wav", "sample_audio/sample_1.wav", "sample_audio/sample_2.wav", "sample_audio/sample_3.wav", "sample_audio/sample_4.wav"])
+    
     _, c1 = plt.subplots()
-    c1.plot(rev_f, color="red")
-    c1.plot(original, color="green")
+    c1.plot(reversed_propeller_noise, color="orange")
 
-
-    # print(freqs)
-
-    # x = np.linspace(0, 1, fs)  # the points on the x axis for plotting
+    # apply the reverse propeller noise to the first file sample
+    _, c1 = plt.subplots()
+    c1.plot(sample_0_noise - reversed_propeller_noise, color="purple")
     
-    # not_def_wave = []
-    # for f in freqs:
-    #     not_def_wave.append(np.sin(2 * np.pi * f * x))
-    
-    # combined_waves = -np.sum(not_def_wave, axis=0)
-    # _, c1 = plt.subplots()
-    # c1.plot(combined_waves, color="green")
-
-    # _, c1 = plt.subplots()
-    # c1.plot(not_def_wave[1], color="green")
-
-    # _, c1 = plt.subplots()
-    # c1.plot(combined_waves + original, color="green")
-
-    # print(original)
-    # print(combined_waves)
-
+    # show plots of the different steps
     plt.show()
 
-
-
-get_propeller_noise()
+# demo
+demo()

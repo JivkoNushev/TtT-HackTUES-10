@@ -19,30 +19,36 @@ def read_wav(wav_file):
 
 def get_fourier_frequencies(wav_file):
     # Open the audio file
-    _, data = read_wav(wav_file)
+    freq, data = read_wav(wav_file)
     
-    # _, c3 = plt.subplots()
-    # c3.plot(data, color="blue")
+    # Get the frequencies
+    fourier = np.fft.rfft(data)
+    fourier = np.abs(fourier)
+
+    # Get the corresponding frequencies for the FFT
+    frequencies = np.fft.rfftfreq(len(data), d=1/freq)
+    peaks, dict_ = signal.find_peaks(fourier, height=1)
+
+    return peaks, dict_, fourier
+
+def plot_file_fourier(filename):
+    # Open the audio file
+    freq, data = read_wav(filename)
 
     # Get the frequencies
     fourier = np.fft.rfft(data)
     fourier = np.abs(fourier)
 
     # Get the corresponding frequencies for the FFT
-    # frequencies = np.fft.rfftfreq(len(data), d=1/sample_rate)
-    peaks, dict_ = signal.find_peaks(fourier, height=1)
+    frequencies = np.fft.rfftfreq(len(data), d=1/freq)
+    _, c1 = plt.subplots()
+    c1.plot(frequencies, fourier, color="green")
+    c1.set_xlim(0, 20000)  # Set x-axis limit to 0-20 kHz
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('Amplitude')
+    plt.title('Frequency Spectrum')
+    plt.grid()
 
-    # # Plot the frequency spectrum
-    # _, c1 = plt.subplots()
-    # c1.plot(frequencies, fourier, color="green")
-    # c1.set_xlim(0, 20000)  # Set x-axis limit to 0-20 kHz
-    # plt.xlabel('Frequency (Hz)')
-    # plt.ylabel('Amplitude')
-    # plt.title('Frequency Spectrum')
-    # plt.grid()
-
-    return peaks, dict_, fourier
-
-# peaks = get_fourier_frequencies("sample_audio/sample_0.wav")
+# peaks,_,_ = get_fourier_frequencies("sample_audio/sample_0.wav")
 # print(peaks)
 
