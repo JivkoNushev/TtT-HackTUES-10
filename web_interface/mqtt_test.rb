@@ -4,11 +4,21 @@ require 'mqtt'
 # 192.168.43.140:1883 - mosquitto broker from mitkos laptop
 
 # MQTT::Client.connect('192.168.43.140', 1883) do |c|
-client = MQTT::Client.connect(:host => "mqtt-dashboard.com", :port => 8884 )
+MQTT::Client.connect(
+  :host => "mqtt-dashboard.com",
+  :port => 8884
+) do |client|
 
-client.subscribe("tues/testtopic/1")
+  puts client
+  topic = "tues/testtopic/1"
+  payload = { test: "This test message."}.to_json
+  client.publish(topic, payload, retain=false, qos=1)
 
-# To receive a message from a topic:
-client.get do |topic, message|
-    puts "#{topic}: #{message}"
 end
+
+# client.subscribe("tues/testtopic/1")
+
+# # To receive a message from a topic:
+# client.get do |topic, message|
+#     puts "#{topic}: #{message}"
+# end
