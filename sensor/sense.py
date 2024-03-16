@@ -20,7 +20,7 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 
     valueScaled = (value * rightSpan) // leftSpan
 
-    return valueScaled
+    return rightMin + valueScaled
 
 analog_values = []
 analog_values_inverted = []
@@ -31,10 +31,11 @@ for i in range(NUM_SAMPLE_BYTES_TO_WRITE):
         if i == 0:
             timestamp = time.time
             analog_values.append(timestamp)
-        value = translate(value, 0, 4095, 0, 65535)
+        value = translate(value, 0, 4095, -32768, 32767)
         analog_values.append(value)
     time.sleep(1 / SAMPLE_RATE)
 
 print(analog_values)
 client.publish("noise", str(analog_values), 0)
+client.publish("active/micro", 5, 0)
 client.disconnect()

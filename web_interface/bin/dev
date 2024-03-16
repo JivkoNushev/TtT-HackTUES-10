@@ -23,4 +23,6 @@ echo "Starting file monitoring..."
 bundle exec ruby listen_for_files.rb &
 echo "Started file monitoring"
 
+bundle exec ruby mqtt_test.rb &
+
 exec foreman start -f Procfile.dev "$@"

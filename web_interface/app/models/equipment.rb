@@ -10,6 +10,10 @@ class Equipment < ApplicationRecord
     in_operation: 5
   }
 
+  after_create_commit -> {
+    broadcast_append_to "equipments", target: "equipments", partial: 'equipment/item', locals: { item: self }
+  }
+
   after_update_commit -> {
     broadcast_replace_to "equipments", target: self, partial: "equipment/item", locals: { item: self }
   }

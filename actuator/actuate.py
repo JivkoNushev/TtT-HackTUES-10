@@ -1,5 +1,5 @@
 import sys
-
+import time
 import paho.mqtt.client as paho
 
 
@@ -18,9 +18,14 @@ client.subscribe("silence")
 
 try:
     print("Press CTRL+C to exit...")
-    client.loop_forever()
+    client.loop_start()
+    while True:
+        client.publish("active/speaker", 2, 0)
+        time.sleep(5)
+
 except Exception:
     print("Caught an Exception, something went wrong...")
+
 finally:
     print("Disconnecting from the MQTT broker")
     client.disconnect()
